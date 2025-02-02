@@ -35,10 +35,10 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
         public string Country { get; set; }
         public string HomePhone { get; set; }
         public string Extension { get; set; }
-
         public string PhotoPath { get; set; }
         public string statuss { get; set; }
-
+        public string username { get; set; }  // เพิ่ม Username
+        public string Password { get; set; }  // เพิ่ม Password
 
         private void AddCustomer_Load(object sender, EventArgs e)
         {
@@ -60,6 +60,9 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             txtHomePhone.Text = HomePhone ?? string.Empty;
             txtExtension.Text = Extension ?? string.Empty;
             txtPhotoPath.Text = PhotoPath ?? string.Empty;
+            txtUsername.Text = username ?? string.Empty;  // ตั้งค่า Username
+            txtPassword.Text = Password ?? string.Empty;  // ตั้งค่า Password
+
 
             // ตั้ง Focus ไปที่ TextBox ชื่อ
             txtLastName.Focus();
@@ -107,6 +110,8 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
                                Country = @Country, 
                                HomePhone = @HomePhone, 
                                Extension = @Extension, 
+                               Username = @Username, 
+                               Password = @Password, 
                                PhotoPath = @PhotoPath
                            WHERE EmployeeID = @EmployeeID";
 
@@ -126,6 +131,8 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             cmd.Parameters.AddWithValue("@HomePhone", txtHomePhone.Text.Trim());
             cmd.Parameters.AddWithValue("@Extension", txtExtension.Text.Trim());
             cmd.Parameters.AddWithValue("@EmployeeID", txtEmployeeID.Text.Trim());
+            cmd.Parameters.AddWithValue("@Username", txtUsername.Text.Trim());  // เพิ่ม Username
+            cmd.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());  // เพิ่ม Password
             cmd.Parameters.AddWithValue("@PhotoPath", txtPhotoPath.Text.Trim());
 
             try
@@ -157,11 +164,10 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
                 return;
             }
 
-
             string sql = @"INSERT INTO Employees 
-                           (LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, Address, City, Region, PostalCode, Country, HomePhone, Extension) 
+                           (LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, Address, City, Region, PostalCode, Country, HomePhone, Extension, Username, Password, PhotoPath) 
                            VALUES 
-                           (@LastName, @FirstName, @Title, @TitleOfCourtesy, @BirthDate, @HireDate, @Address, @City, @Region, @PostalCode, @Country, @HomePhone, @Extension)";
+                           (@LastName, @FirstName, @Title, @TitleOfCourtesy, @BirthDate, @HireDate, @Address, @City, @Region, @PostalCode, @Country, @HomePhone, @Extension, @Username, @Password, @PhotoPath)";
 
             cmd = new SqlCommand(sql, connection);
 
@@ -178,6 +184,8 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             cmd.Parameters.AddWithValue("@Country", txtCountry.Text.Trim());
             cmd.Parameters.AddWithValue("@HomePhone", txtHomePhone.Text.Trim());
             cmd.Parameters.AddWithValue("@Extension", txtExtension.Text.Trim());
+            cmd.Parameters.AddWithValue("@Username", txtUsername.Text.Trim());  // เพิ่ม Username
+            cmd.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());  // เพิ่ม Password
             cmd.Parameters.AddWithValue("@PhotoPath", txtPhotoPath.Text.Trim());
 
             try
@@ -195,9 +203,8 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             }
             catch (Exception ex)
             {
-                
+                MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message, "Error");
             }
         }
-
     }
 }

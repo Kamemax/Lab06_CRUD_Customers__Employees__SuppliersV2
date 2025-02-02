@@ -2,15 +2,12 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
 
 namespace Lab06_CRUD_Customers__Employees__SuppliersV2
 {
@@ -20,12 +17,10 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
         {
             InitializeComponent();
         }
+
         SqlConnection connection;
         SqlDataAdapter da;
         SqlCommand cmd;
-
-
-
 
         private void Home_Click(object sender, EventArgs e)
         {
@@ -34,41 +29,38 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             this.Hide();
         }
 
-        //DATA
+        // DATA
         private void showdata()
         {
-            string sql = " select * from Employees";
+            string sql = "SELECT * FROM Employees";
             cmd = new SqlCommand(sql, connection);
             da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
             dataGridView2.DataSource = ds.Tables[0];
         }
+
         private void Employees_Load(object sender, EventArgs e)
         {
             connection = connectDB.ConnectNortwind();
             showdata();
         }
-        //Reset
 
+        // Reset Data
         private void btnReset_Click(object sender, EventArgs e)
         {
             try
             {
-                // รีเซ็ตข้อมูลใน DataGridView โดยโหลดข้อมูลใหม่จากฐานข้อมูล
                 showdata();
-
-                // แสดงข้อความแจ้งเตือนเมื่อรีเซ็ตสำเร็จ
                 MessageBox.Show("รีเซ็ตข้อมูลสำเร็จ", "สำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                // แสดงข้อความข้อผิดพลาดหากเกิดปัญหา
                 MessageBox.Show($"เกิดข้อผิดพลาด: {ex.Message}", "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            //Reset
         }
 
+        // Insert Employee
         private void btninsertCustomer_Click(object sender, EventArgs e)
         {
             AddEmployee c = new AddEmployee();
@@ -77,56 +69,46 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             showdata();
         }
 
+        // Delete Employee
         private void btnDeleteCustomerID_Click(object sender, EventArgs e)
         {
-            // ตรวจสอบว่ามีแถวที่ถูกเลือกหรือไม่
             if (dataGridView2.SelectedRows.Count == 0)
             {
                 MessageBox.Show("กรุณาเลือกข้อมูลพนักงานที่ต้องการลบ", "Error");
                 return;
             }
 
-            // ดึงค่าจากแถวที่เลือก
             DataGridViewRow row = dataGridView2.SelectedRows[0];
 
-            // ตรวจสอบว่า EmployeeID มีค่าอยู่หรือไม่
             if (row.Cells["EmployeeID"].Value == null)
             {
                 MessageBox.Show("ไม่สามารถลบข้อมูลที่ไม่มี EmployeeID ได้", "Error");
                 return;
             }
 
-            // ดึงค่า EmployeeID จากแถวที่เลือก
             string employeeID = row.Cells["EmployeeID"].Value.ToString();
 
-            // ยืนยันการลบข้อมูล
             DialogResult result = MessageBox.Show($"คุณต้องการลบพนักงาน ID: {employeeID} ใช่หรือไม่?", "ยืนยันการลบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
                 try
                 {
-                    // SQL สำหรับลบข้อมูล
                     string sql = "DELETE FROM Employees WHERE EmployeeID = @EmployeeID";
-
-                    // สร้างคำสั่ง SQL
                     cmd = new SqlCommand(sql, connection);
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
 
-                    // เปิดการเชื่อมต่อ
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
                     }
 
-                    // ลบข้อมูล
                     int rowsAffected = cmd.ExecuteNonQuery();
 
-                    // แสดงผลลัพธ์
                     if (rowsAffected > 0)
                     {
                         MessageBox.Show("ลบข้อมูลพนักงานสำเร็จ", "สำเร็จ");
-                        showdata(); // โหลดข้อมูลใหม่
+                        showdata();
                     }
                     else
                     {
@@ -139,7 +121,6 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
                 }
                 finally
                 {
-                    // ปิดการเชื่อมต่อ
                     if (connection.State == ConnectionState.Open)
                     {
                         connection.Close();
@@ -148,32 +129,26 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             }
         }
 
-
-
+        // Edit Employee
         private void btnEdit_Click_1(object sender, EventArgs e)
         {
-            // ตรวจสอบว่ามีการเลือกแถวใน DataGridView หรือไม่
             if (dataGridView2.SelectedRows.Count == 0)
             {
                 MessageBox.Show("กรุณาเลือกข้อมูลพนักงานที่ต้องการแก้ไข", "Error");
                 return;
             }
 
-            // ดึงค่าจากแถวที่เลือก
             DataGridViewRow row = dataGridView2.SelectedRows[0];
 
-            // ตรวจสอบว่า EmployeeID มีค่าอยู่หรือไม่
             if (row.Cells["EmployeeID"].Value == null)
             {
                 MessageBox.Show("ไม่สามารถแก้ไขข้อมูลที่ไม่มี EmployeeID ได้", "Error");
                 return;
             }
 
-            // สร้างฟอร์ม AddCustomer สำหรับการแก้ไข
             AddEmployee c = new AddEmployee();
-            c.statuss = "update";  // ตั้งค่าเป็น "update" เพื่อระบุว่าเป็นการแก้ไข
+            c.statuss = "update";
 
-            // ส่งค่าจาก DataGridView ไปยังฟอร์ม AddCustomer
             c.EmployeeID = row.Cells["EmployeeID"].Value.ToString();
             c.LastName = row.Cells["LastName"].Value?.ToString();
             c.FirstName = row.Cells["FirstName"].Value?.ToString();
@@ -188,12 +163,12 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
             c.Country = row.Cells["Country"].Value?.ToString();
             c.HomePhone = row.Cells["HomePhone"].Value?.ToString();
             c.Extension = row.Cells["Extension"].Value?.ToString();
-            c.Extension = row.Cells["PhotoPath"].Value?.ToString();
+            c.username = row.Cells["Username"].Value?.ToString(); // Add Username
+            c.Password = row.Cells["Password"].Value?.ToString();
+            // Add Password
 
-            // แสดงฟอร์ม AddCustomer
             c.ShowDialog();
 
-            // โหลดข้อมูลใหม่
             showdata();
         }
 
@@ -212,7 +187,7 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
                 }
 
                 AddEmployee c = new AddEmployee();
-                c.statuss = "update"; 
+                c.statuss = "update";
 
                 // ส่งค่าจาก DataGridView ไปยังฟอร์ม AddSupplier
                 c.EmployeeID = row.Cells["EmployeeID"].Value.ToString();
@@ -229,6 +204,8 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
                 c.Country = row.Cells["Country"].Value?.ToString();
                 c.HomePhone = row.Cells["HomePhone"].Value?.ToString();
                 c.Extension = row.Cells["Extension"].Value?.ToString();
+                c.username = row.Cells["Username"].Value?.ToString(); // Add Username
+                c.Password = row.Cells["Password"].Value?.ToString();
 
 
                 // แสดงฟอร์ม AddSupplier

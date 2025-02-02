@@ -59,6 +59,10 @@
             Cancle = new Button();
             txtHomePhone = new TextBox();
             txtPhotoPath = new PictureBox();
+            txtUsername = new TextBox();
+            Username = new Label();
+            txtPassword = new TextBox();
+            label15 = new Label();
             ((System.ComponentModel.ISupportInitialize)txtPhotoPath).BeginInit();
             SuspendLayout();
             // 
@@ -314,11 +318,47 @@
             txtPhotoPath.TabIndex = 31;
             txtPhotoPath.TabStop = false;
             // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(438, 51);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(125, 27);
+            txtUsername.TabIndex = 32;
+            // 
+            // Username
+            // 
+            Username.AutoSize = true;
+            Username.Location = new Point(357, 51);
+            Username.Name = "Username";
+            Username.Size = new Size(75, 20);
+            Username.TabIndex = 33;
+            Username.Text = "Username";
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(656, 51);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(125, 27);
+            txtPassword.TabIndex = 35;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(576, 59);
+            label15.Name = "label15";
+            label15.Size = new Size(58, 20);
+            label15.TabIndex = 36;
+            label15.Text = "label15";
+            // 
             // AddEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(869, 624);
+            Controls.Add(label15);
+            Controls.Add(txtPassword);
+            Controls.Add(Username);
+            Controls.Add(txtUsername);
             Controls.Add(txtPhotoPath);
             Controls.Add(txtHomePhone);
             Controls.Add(Cancle);
@@ -391,5 +431,9 @@
         private Button Cancle;
         private TextBox txtHomePhone;
         private PictureBox txtPhotoPath;
+        private TextBox txtUsername;
+        private Label Username;
+        private TextBox txtPassword;
+        private Label label15;
     }
 }
