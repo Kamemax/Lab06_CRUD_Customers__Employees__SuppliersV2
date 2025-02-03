@@ -58,21 +58,27 @@ namespace Lab06_CRUD_Customers__Employees__SuppliersV2
         {
             Form1 form1 = new Form1();
             form1.Show();  // ใช้ Show() แทน ShowDialog()
-            this.Hide();
+
         }
 
         private void Employees_Click(object sender, EventArgs e)
         {
             Employees employees = new Employees();
             employees.Show();  // ใช้ Show() แทน ShowDialog()
-            this.Hide();
+
         }
 
         private void Suppliers_Click(object sender, EventArgs e)
         {
             Suppliers suppliers = new Suppliers();
             suppliers.Show();  // ใช้ Show() แทน ShowDialog()
-            this.Hide();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FRMMinimartMSi fRMMinimartMSi = new FRMMinimartMSi();
+            fRMMinimartMSi.Show();
         }
     }
 }

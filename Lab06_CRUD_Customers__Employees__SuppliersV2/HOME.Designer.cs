@@ -34,21 +34,24 @@
             Employees = new Button();
             customer = new Button();
             login = new Button();
+            button1 = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(logout);
             groupBox1.Controls.Add(Suppliers);
             groupBox1.Controls.Add(Employees);
             groupBox1.Controls.Add(customer);
-            groupBox1.Location = new Point(46, 76);
+            groupBox1.Location = new Point(3, 76);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(561, 158);
+            groupBox1.Size = new Size(673, 158);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
+            groupBox1.Visible = false;
             // 
             // logout
             // 
@@ -100,6 +103,16 @@
             login.UseVisualStyleBackColor = true;
             login.Click += login_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(493, 33);
+            button1.Name = "button1";
+            button1.Size = new Size(134, 59);
+            button1.TabIndex = 8;
+            button1.Text = "FRMMinimartMSi";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // HOME
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -123,5 +136,6 @@
         private Button Employees;
         private Button customer;
         private Button login;
+        private Button button1;
     }
 }

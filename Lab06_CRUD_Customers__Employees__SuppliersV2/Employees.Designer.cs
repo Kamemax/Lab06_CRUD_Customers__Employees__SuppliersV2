@@ -111,6 +111,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
+            CancelButton = Home;
             ClientSize = new Size(1408, 450);
             Controls.Add(btnEdit);
             Controls.Add(Home);
